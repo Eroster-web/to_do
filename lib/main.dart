@@ -7,13 +7,14 @@ void main() async {
   await Hive.initFlutter();
 
   //open a box
-  var box = await Hive.openBox('mybox');
+  final Box box = await Hive.openBox('mybox');
 
-  runApp(const MyApp());
+  runApp(MyApp(box: box,));
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+  final Box box;
+  const MyApp({super.key, required this.box});
 
   // This widget is the root of your application.
   @override
@@ -21,7 +22,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Flutter Demo',
-      home: const HomePage(),
+      home: HomePage(box: box,),
       theme: ThemeData(primarySwatch: Colors.blueGrey),
     );
   }

@@ -5,17 +5,20 @@ import 'package:flutter_slidable/flutter_slidable.dart';
 
 import 'constants.dart';
 
+typedef OnChanged = Function(bool?)?;
+
 class ToDoTile extends StatelessWidget {
   final String taskName;
   final bool taskCompleted;
-  Function(bool?)? onChanged;
-  Function(BuildContext)? deleteFunction;
-  ToDoTile(
-      {super.key,
-      required this.taskName,
-      required this.taskCompleted,
-      required this.onChanged,
-      required this.deleteFunction});
+  final OnChanged onChanged;
+  final VoidCallback deleteFunction;
+  const ToDoTile({
+    super.key,
+    required this.taskName,
+    required this.taskCompleted,
+    required this.onChanged,
+    required this.deleteFunction,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -29,7 +32,7 @@ class ToDoTile extends StatelessWidget {
           motion: const StretchMotion(),
           children: [
             SlidableAction(
-              onPressed: deleteFunction,
+              onPressed: (context) => deleteFunction(),
               icon: Constants.delete,
               backgroundColor: Colors.grey.shade600,
               borderRadius: BorderRadius.circular(Constants.radius),
